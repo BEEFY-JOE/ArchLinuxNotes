@@ -6,4 +6,5 @@ My Personal Notes on Arch Linux. This installation guide is for Asus TUF A16 Gam
 
 ## Post Installation
 [Asus Linux Arch Install Guide](https://asus-linux.org/guides/arch-guide/)
+
 [Asus Linux FAQ](https://asus-linux.org/faq/)
