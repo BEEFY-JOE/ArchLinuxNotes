@@ -6,6 +6,10 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
 2. [Post Installation](#postInstallation)
 3. [Changes to Kernel Boot Options](#changesToKernelBootOptions)
 4. [Tips on Package Management](#tipsOnPackageManagement)
+    1. [AUR Helpers](#aurHelpers)
+    2. [Keeping the System Clean and Free of Orphaned Packages](#keepSystemClean)
+    3. [Cleaning Up Pacman/Paru Cache and AUR Clones](#cleanUpPacmanParuCache)
+    4. [Rolling Back Packages](#rollBackPackages)
 
 <a name="installation"></a>
 
@@ -40,10 +44,14 @@ _**Note:** It is unclear if all of these options are nescessary to resolve Refre
 
 * Keep the system clean and free of orphaned pacakges. 
 
+<a name="aurHelpers"></a>
+
 ### AUR Helpers
 Prefered AUR helper is `paru`. Paru, by default, makes the user review the PKGBUILD file to review contents to ensure there are no malicious activities in the PKGBUILD.
 
 _**Note:** Before using Paru or another AUR Helper (Such as yay), it is important to learn how to build and install AUR packages on your own without the use of an AUR helper. Refer to [Arch Wiki article](https://wiki.archlinux.org/title/Arch_User_Repository)._
+
+<a name="keepSystemClean"></a>
 
 ### Keeping the System Clean and Free of Orphaned Packages
 It is important to keep the system clean of extraneous packages that are uneeded. Only install packages and dependencies that are absolutely needed. When uninstalling packages that were sourced from the official Arch repos or the AUR we can ensure that we are removing packages cleanly by using the following flags with `pacman` or `paru`. `-Rs`. Refer to [pacman man file](https://man.archlinux.org/man/pacman.8.en) for what these flags do.
@@ -59,6 +67,8 @@ paru -Qdtq | paru -Rns -
 ``` 
 Again refer to the [pacman man file](https://man.archlinux.org/man/pacman.8.en) for what these flags do.
 
+<a name="cleanUpPacmanParuCache"></a>
+
 ### Cleaning Up Pacman/Paru Cache and AUR Clones
 When installing packages from the AUR with `paru`, these clone the AUR repo for that package do your local computer. These files are usually not needed after installation of the AUR package. Use the following command to cleanup the pacman cache, paru cache, and the paru AUR package clones (clones are located in `~/.cache/paru/clone/` by default). Accepting all with `y`.
 
@@ -66,6 +76,8 @@ _**Note:** Use this command carefully, and understand what it does before procee
 ```
 paru -Scc
 ```
+
+<a name="rollBackPackages"></a>
 
 ### Rolling Back Packages
 Unfinished: _this section needs to be filled out once information is re-learned._
