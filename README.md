@@ -97,8 +97,6 @@ sudo nano /etc/environment
 ```
 Then add the following line, save the file, and the reboot the computer;
 ```
-KWIN_DRM_DEVICES="/dev/dri/card1:/dev/dri/card2:/dev/dri/card0"
+KWIN_DRM_NO_DIRECT_SCANOUT=1
 ```
-Now the issue no longer occurs. 
-
-**Note:** Your cards may be different than mine, you can check your device identifiers by running;`ls -l /dev/dri/by-path` and then finding out which card is which by checking your `lspci` output and comparing the two. 
+Now the issue no longer occurs. Issue was documented in [this gitlab issue report.](https://gitlab.freedesktop.org/drm/amd/-/issues/2075) If this work around helped you, please take the time to report the real issue in the Gitlab issues thread so that it can maybe get patched one day.
