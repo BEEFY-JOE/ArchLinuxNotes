@@ -97,7 +97,7 @@ sudo nano /etc/environment
 ```
 Then add the following line, save the file, and the reboot the computer;
 ```
-KWIN_DRM_DEVICES="/dev/dri/card1:/dev/dri/card2:/dev/dri/card0
+KWIN_DRM_DEVICES="/dev/dri/card1:/dev/dri/card2:/dev/dri/card0"
 ```
 Now the issue no longer occurs. 
 
