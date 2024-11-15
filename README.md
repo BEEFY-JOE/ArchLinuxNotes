@@ -10,6 +10,7 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
     2. [Keeping the System Clean and Free of Orphaned Packages](#keepSystemClean)
     3. [Cleaning Up Pacman/Paru Cache and AUR Clones](#cleanUpPacmanParuCache)
     4. [Rolling Back Packages](#rollBackPackages)
+5. [Environment Variable Changes](#envVars)
 
 <a name="installation"></a>
 
@@ -81,3 +82,23 @@ paru -Scc
 
 ### Rolling Back Packages
 Unfinished: _this section needs to be filled out once information is re-learned._
+
+<a name="envVars"></a>
+
+## Environment Variable Changes
+### Changes to Kwin for Hybrid Graphics Gaming on External Monitors
+When using KDE Desktop with my particular setup (3 monitors, one plugged into the laptop directly with HDMI, and the other connected via USB4 port and a DisplayLink dock) there is odd behavior with games in Fullscreen mode played on the external monitor on the HDMI. If you take focus away from the window by moving the mouse outside of the window, no frames will be generated or will only be generated momentarily and will persist until the program is restarted completely.
+
+My old work around for this issue was to turn on the laptop's MUX switch using `supergfxctl -m AsusMuxDgpu` and then reboot. However, it is annoying to reboot. 
+
+A better work around for this problem is to make the following change to your `/etc/environment` file so that Kwin prioritizes the dGPU for rendering over the other cards.
+```
+sudo nano /etc/environment
+```
+Then add the following line, save the file, and the reboot the computer;
+```
+KWIN_DRM_DEVICES="/dev/dri/card1:/dev/dri/card2:/dev/dri/card0
+```
+Now the issue no longer occurs. 
+
+**Note:** Your cards may be different than mine, you can check your device identifiers by running;`ls -l /dev/dri/by-path` and then finding out which card is which by checking your `lspci` output and comparing the two. 
