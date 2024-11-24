@@ -11,6 +11,7 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
     3. [Cleaning Up Pacman/Paru Cache and AUR Clones](#cleanUpPacmanParuCache)
     4. [Rolling Back Packages](#rollBackPackages)
 5. [Environment Variable Changes](#envVars)
+6. [Fixing Wifi Latency Issues](#wifiLatency)
 
 <a name="installation"></a>
 
@@ -100,3 +101,20 @@ Then add the following line, save the file, and the reboot the computer;
 KWIN_DRM_NO_DIRECT_SCANOUT=1
 ```
 Now the issue no longer occurs. Issue was documented in [this gitlab issue report.](https://gitlab.freedesktop.org/drm/amd/-/issues/2075) If this work around helped you, please take the time to report the real issue in the Gitlab issues thread so that it can maybe get patched one day.
+
+<a name="wifiLatency"></a>
+## Fixing Wifi Latency Issues
+### Disable NetworkManager Wifi Powersave
+Issue is documented and on [this Github thread](https://gist.github.com/jcberthon/ea8cfe278998968ba7c5a95344bc8b55#file-wifi-powersave-off-conf) and several other places on the internet.
+
+Disable Wifi Powersaving by creating `wifi-powersave-off.conf` file inside the `/etc/NetworkManager/conf.d` directory.
+Inside the file you just created, enter the following;
+```
+# File to be place under /etc/NetworkManager/conf.d
+[connection]
+# Values are 0 (use default), 1 (ignore/don't touch), 2 (disable) or 3 (enable).
+wifi.powersave = 2
+```
+Then run, `sudo systemctl restart NetworkManager` in your shell.
+
+Voila! Wireless latency spikes and performance are now vastly improved. 
