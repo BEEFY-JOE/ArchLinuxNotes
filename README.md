@@ -28,7 +28,7 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
 
 ## Changes to Kernel Boot Options
 ### Fixing Refresh Rate and Graphics Artifacting
-Add the following flags to the options line in the `/boot/loader/entries/linux.conf` file. The specific .conf file name will be different for each kernel.
+If using systemd-boot add the following flags to the options line in the `/boot/loader/entries/linux.conf` file. The specific .conf file name will be different for each kernel.
 
 `amdgpu.dcdebugmask=0x10 amdgpu.dpm=1 amdgpu.ppfeaturemask=0xffffffff amdgpu.dc=1 amdgpu.si_support=1 amdgpu.cik_support=1`
 
