@@ -12,6 +12,7 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
     4. [Rolling Back Packages](#rollBackPackages)
 5. [Environment Variable Changes](#envVars)
 6. [Fixing Wifi Latency Issues](#wifiLatency)
+7. [supergfxctl Graphics Switching Fix](#supergfxctl)
 
 <a name="installation"></a>
 
@@ -118,3 +119,30 @@ wifi.powersave = 2
 Then run, `sudo systemctl restart NetworkManager` in your shell.
 
 Voila! Wireless latency spikes and performance are now vastly improved. 
+
+<a name="supergfxctl"></a>
+## supergfxctl Graphics Switching Fix
+
+There appears to be an issue with the latest version of `supergfxctl` (v5.2.4) from the asus-linux g14 repository. When this version is installed the system journal is spammed with error messages about dGPU not detected, and the ability to change to Integrated graphics only mode is not possible. To fix the issue rollback to working version 5.2.1 by doing the following;
+
+### Disable and stop current supergfxctl service
+```
+sudo systemctl stop supergfxctl.service
+sudo systemctl disable supergfxctl.service
+```
+
+### Uninstall g14 repository supergfxctl 5.2.4
+`yay -Rns supergfxctl`
+
+### Build and Install 5.2.1 from the supergfxctl source on Gitlab
+```
+cd ~/prefered/directory/forGitRepoClones
+git clone https://gitlab.com/asus-linux/supergfxctl.git
+cd supergfxctl
+git checkout tags/5.2.1
+make && sudo make install
+sudo systemctl enable supergfxctl.service --now
+```
+
+This should resolve the ability to switch to Integrated gpu only, and all other functionality of the application should work now as expected. In addition system journal should no longer be spammed with `ERROR: get_runtime_status: Could not find dGPU` errors, and should be able to detect the dGPU properly. 
+This issue has been reported in [Issue #144](https://gitlab.com/asus-linux/supergfxctl/-/issues/144) on the asus-linx supergfxctl GitLab. If this helped you, please contribute to the issue on the GitLab so this bug can be identified and eventually fixed. 
