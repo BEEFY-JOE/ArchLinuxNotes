@@ -13,6 +13,7 @@ My Personal Notes on Arch Linux. These notes are specifically for my laptop, **A
 5. [Environment Variable Changes](#envVars)
 6. [Fixing Wifi Latency Issues](#wifiLatency)
 7. [supergfxctl Graphics Switching Fix](#supergfxctl)
+8. [Improve Built In Speaker Quality](#speakerQuality)
 
 <a name="installation"></a>
 
@@ -145,4 +146,21 @@ sudo systemctl enable supergfxctl.service --now
 ```
 
 This should resolve the ability to switch to Integrated gpu only, and all other functionality of the application should work now as expected. In addition system journal should no longer be spammed with `ERROR: get_runtime_status: Could not find dGPU` errors, and should be able to detect the dGPU properly. 
-This issue has been reported in [Issue #144](https://gitlab.com/asus-linux/supergfxctl/-/issues/144) on the asus-linx supergfxctl GitLab. If this helped you, please contribute to the issue on the GitLab so this bug can be identified and eventually fixed. 
+This issue has been reported in [Issue #144](https://gitlab.com/asus-linux/supergfxctl/-/issues/144) on the asus-linux supergfxctl GitLab. If this helped you, please contribute to the issue on the GitLab so this bug can be identified and eventually fixed. 
+
+<a name="speakerQuality"></a>
+## Improve Built In Speaker Quality
+
+If you were using the Dolby Atmos/Access application on Windows for use with the built in laptop speakers, you will notice that the default audio quality on Linux is substantially worse. This is because the Dolby app applies Digital Signal Processing (DSP) to the audio stream before it's sent to the built in speaker output. This gives the illusion of improved speaker quality. 
+
+Unfortunately there is not a native Dolby Atmos/Access app for Linux. We will have to use [easyeffects](https://github.com/wwmm/easyeffects) to apply DSP to the built in speaker output. 
+
+The user [sklynic](https://github.com/sklynic) wrote up a wonderful [guide](https://github.com/sklynic/easyeffects-tuf-gaming-a15/blob/main/Guides.md) on how to create this manually from the driver package from the Asus Driver downloads page for your laptop. For convenience, I have uploaded my easyeffects EQ preset to this repo. The EQ profile is based on the "Dynamic" preset in the Dolby app. If you want a different preset, please refer to the guide mentioned above.  
+1. Download the `FA617NTdolbyDynamic.txt` file in the easyeffects folder in this repo
+2. Open easyeffects
+3. Add the "Equalizer" plugin to your output effects 
+4. Click "Import APO"
+5. Open the `FA617NTdolbyDynamic.txt` file you downloaded earlier
+6. Now the speakers should sound better.
+
+**NOTE:** This will help improve the speaker quality a little bit, but the Dolby app adds much more than just EQ to the output signal. You may need to extract more information from the Dolby Driver that Asus provides, and create more DSP effects to try to match all of the processing going on in the Doby app.
